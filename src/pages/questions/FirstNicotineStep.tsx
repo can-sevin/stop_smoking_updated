@@ -1,16 +1,71 @@
 import React, { useState } from "react"
-import { Image, Text, StyleSheet, TextInput, TouchableOpacity, View, StatusBar } from "react-native"
+import { Text, StyleSheet, TouchableOpacity, View, StatusBar } from "react-native"
 import * as Animatable from 'react-native-animatable'
 import I18n from '../../lang/_i18n'
 import Video from "react-native-video"
 
+const questions = [
+  {
+    question: I18n.t('first_nicotine_question'),
+    options: [
+      { text: I18n.t('first_nicotine_question_a'), points: 3 },
+      { text: I18n.t('first_nicotine_question_b'), points: 2 },
+      { text: I18n.t('first_nicotine_question_c'), points: 1 },
+      { text: I18n.t('first_nicotine_question_d'), points: 0 },
+    ],
+  },
+  {
+    question: I18n.t('second_nicotine_question'),
+    options: [
+      { text: I18n.t('second_nicotine_question_a'), points: 1 },
+      { text: I18n.t('second_nicotine_question_b'), points: 0 },
+    ],
+  },
+  {
+    question: I18n.t('third_nicotine_question'),
+    options: [
+      { text: I18n.t('third_nicotine_question_a'), points: 1 },
+      { text: I18n.t('third_nicotine_question_b'), points: 0 },
+    ],
+  },
+  {
+    question: I18n.t('forth_nicotine_question'),
+    options: [
+      { text: I18n.t('forth_nicotine_question_a'), points: 3 },
+      { text: I18n.t('forth_nicotine_question_b'), points: 2 },
+      { text: I18n.t('forth_nicotine_question_c'), points: 1 },
+      { text: I18n.t('forth_nicotine_question_d'), points: 0 },
+    ],
+  },
+  {
+    question: I18n.t('fifth_nicotine_question'),
+    options: [
+      { text: I18n.t('fifth_nicotine_question_a'), points: 1 },
+      { text: I18n.t('fifth_nicotine_question_b'), points: 0 },
+    ],
+  },
+  {
+    question: I18n.t('sixth_nicotine_question'),
+    options: [
+      { text: I18n.t('sixth_nicotine_question_a'), points: 1 },
+      { text: I18n.t('sixth_nicotine_question_b'), points: 0 },
+    ],
+  },
+];
+
 const FirstNicotineStep = (props: any) => {
-  const [perOfDay, setPerOfDay] = useState(0)
+  const [points, setPoints] = useState(0);
+  const [index, setIndex] = useState(0);
 
-  const buttonClickedHandler = () => {
-    // props.navigation.navigate('SecondStep',{ perOfDay: perOfDay })
-  }
-
+  const handleOptionSelect = (point:number) => {
+    setPoints(points + point);
+    if (index < questions.length - 1) {
+      setIndex(index + 1);
+    } else {
+      props.navigation.navigate('SecondStep',{ points: points });
+    }
+  };
+  
   return (
     <>
       <View style={ styles.container }>
@@ -24,41 +79,23 @@ const FirstNicotineStep = (props: any) => {
             source={ require('../../../assets/imgs/pexels.mp4') }
           />
         </>
-        <>
-          <Animatable.View animation='bounceInDown' style={ styles.inside_container }>
-            <Text style={ styles.anim_text_middle }>
-              { I18n.t('first_nicotine_question') }
-            </Text>
-            <View>
-              <TouchableOpacity style={ styles.touchable_option } >
-                <Text style={ styles.anim_text_option }>
-                  { I18n.t('first_nicotine_question_a') }
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={ styles.touchable_option }>
-                <Text style={ styles.anim_text_option }>
-                  { I18n.t('first_nicotine_question_b') }
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={ styles.touchable_option }>
-                <Text style={ styles.anim_text_option }>
-                  { I18n.t('first_nicotine_question_c') }
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={ styles.touchable_option }>
-                <Text style={ styles.anim_text_option }>
-                  { I18n.t('first_nicotine_question_d') }
-                </Text>
-              </TouchableOpacity>
-            </View>
+        <Animatable.View animation='fadeInDown' style={styles.inside_container}>
+        <Text style={styles.anim_text_middle}>
+          {questions[index].question}
+        </Text>
+        <View>
+          {questions[index].options.map((option, i) => (
             <TouchableOpacity
-              disabled={ perOfDay === 0 }
-              onPress={ buttonClickedHandler }
-              style={ styles.roundButton2 }>
-              <Image style={ styles.button_img } source={ require('../../../assets/imgs/next.png') }/>
+              key={i}
+              onPress={() => handleOptionSelect(option.points)}
+            >
+              <Text style={styles.anim_text_option}>
+                {option.text}
+              </Text>
             </TouchableOpacity>
-          </Animatable.View>
-        </>
+          ))}
+        </View>
+      </Animatable.View>
       </View>
     </>
   )
@@ -125,7 +162,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '80%'
   },
-  inputText:{
+  text_question:{
     marginVertical: 12,
     fontSize: 40,
     minWidth: 64,

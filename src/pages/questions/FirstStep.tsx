@@ -6,9 +6,9 @@ import Video from "react-native-video"
 
 const FirstStep = (props: any) => {
   const [perOfDay, setPerOfDay] = useState(0)
-
+  const nicotinePoints = props.route.params.points;
   const buttonClickedHandler = () => {
-    props.navigation.navigate('SecondStep',{ perOfDay: perOfDay })
+    props.navigation.navigate('SecondStep',{ perOfDay: perOfDay, nicotinePoints: nicotinePoints })
   }
 
   return (

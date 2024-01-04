@@ -22,9 +22,6 @@ import PushNotification from "react-native-push-notification"
 
 const MainScreen = () => {
   const windowWidth = Dimensions.get('window').width
-  const nowMonth = new Date().getMonth()
-  const nowYear = new Date().getFullYear()
-  const nowDay = new Date().getDate()
   const nowTime = new Date().getTime()
   const [perOfDay, setPerOfDay] = useState<number>(0)
   const [perOfBox, setPerOfBox] = useState<number>(0)

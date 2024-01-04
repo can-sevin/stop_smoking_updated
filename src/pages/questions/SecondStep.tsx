@@ -8,7 +8,11 @@ const SecondStep = (props: any) => {
   const [perOfBoxPrice, setPerOfBoxPrice] = useState(0)
 
   const buttonClickedHandler = () => {
-    props.navigation.navigate('ThirdStep',{ perOfDay: props.route.params.perOfDay, perOfBoxPrice: perOfBoxPrice })
+    props.navigation.navigate('ThirdStep',
+    { perOfDay: props.route.params.perOfDay, 
+      nicotinePoints: props.route.params.nicotinePoints, 
+      perOfBoxPrice: perOfBoxPrice 
+    })
   }
 
   return (

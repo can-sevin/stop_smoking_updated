@@ -24,6 +24,7 @@ const ThirdStep = (props: any) => {
     props.navigation.replace('MainScreen',{
       perOfDay: props.route.params.perOfDay,
       perOfBoxPrice: props.route.params.perOfBoxPrice,
+      nicotinePoints: props.route.params.nicotinePoints,
       perOfBox: perOfBox,
       date: date
     })
